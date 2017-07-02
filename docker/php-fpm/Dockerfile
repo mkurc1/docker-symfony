@@ -17,7 +17,7 @@ RUN apt-get update && apt-get install -y \
         libmcrypt-dev \
         libpng12-dev \
         libicu-dev \
-    && docker-php-ext-install -j$(nproc) iconv mcrypt \
+    && docker-php-ext-install -j$(nproc) iconv mcrypt opcache \
     && docker-php-ext-configure gd --with-freetype-dir=/usr/include/ --with-jpeg-dir=/usr/include/ \
     && docker-php-ext-install -j$(nproc) gd
 
@@ -29,6 +29,10 @@ RUN echo "mbstring.internal_encoding = UTF-8" >> /usr/local/etc/php/conf.d/docke
 RUN echo "mbstring.http_input = UTF-8" >> /usr/local/etc/php/conf.d/docker-php.ini
 RUN echo "date.timezone = Europe/Warsaw" >> /usr/local/etc/php/conf.d/docker-php.ini
 RUN echo "memory_limit = 1G" >> /usr/local/etc/php/conf.d/docker-php.ini
+RUN echo "short_open_tag = Off" >> /usr/local/etc/php/conf.d/docker-php.ini
+RUN echo "opcache.max_accelerated_files = 20000  " >> /usr/local/etc/php/conf.d/docker-php.ini
+RUN echo "realpath_cache_size = 4096K  " >> /usr/local/etc/php/conf.d/docker-php.ini
+RUN echo "realpath_cache_ttl = 600" >> /usr/local/etc/php/conf.d/docker-php.ini
 
 # Install Composer
 RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
@@ -38,5 +42,8 @@ RUN composer --version
 RUN echo 'alias sf="php app/console"' >> ~/.bashrc
 RUN echo 'alias sfcl="php app/console cache:clear"' >> ~/.bashrc
 RUN echo 'alias sf3="php bin/console"' >> ~/.bashrc
+
+# Permission fix
+RUN usermod -u 1000 www-data
 
 WORKDIR /var/www/symfony
