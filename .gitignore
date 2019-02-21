@@ -1,2 +1,3 @@
-/docker/db
+/docker/mysql
+/docker/logs
 .env
