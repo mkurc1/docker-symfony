@@ -13,7 +13,7 @@ $ docker-compose build
 $ docker-compose up -d
 ```
 
-If you use Mac OS you should use this commands:
+If you use Mac OS, you should use this commands:
 
 ```
 $ docker-compose -f docker-compose.yml -f docker-compose.mac.yml build
@@ -22,9 +22,7 @@ $ docker-compose -f docker-compose.yml -f docker-compose.mac.yml up -d
 
 It's definitely improve performance on Mac OS.
 
-3. Update 
-
-Update database configuration in `.env` file:
+3. Update database configuration in `.env` file:
 
 ```
 DATABASE_URL=mysql://db_user:db_password@mysql:3306/db_name
