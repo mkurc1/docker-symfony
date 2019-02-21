@@ -39,7 +39,7 @@ php bin/console doctrine:database:create
 php bin/console doctrine:schema:update -f
 ```
 
-Or, if you want use aliases:
+Or, if you want to use aliases:
 
 ```
 $ docker-compose exec php sh -l
